@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITextFieldDelegate
     // Create a reference to a Firebase location
     var myRootRef = Firebase(url:"https://incandescent-torch-8912.firebaseio.com/")
     var default_uuid = NSUUID().UUIDString
+    var uuid = ""
     
     override func viewDidLoad()
     {
@@ -26,12 +27,22 @@ class ViewController: UIViewController, UITextFieldDelegate
         
         self.messageText.delegate = self
         // Write data to Firebase
-        self.myRootRef.setValue("Do you have data? You'll love Firebase.")
+       /* self.myRootRef.setValue("Do you have data? You'll love Firebase.")
         
         // Read data and react to changes
         self.myRootRef.observeEventType(.Value, withBlock: {
             snapshot in
             self.receiveText.text = ("\(snapshot.key) -> \(snapshot.value)")
+        })*/
+        
+        self.myRootRef.observeEventType(.Value, withBlock: {
+            snap in
+            if snap.value is NSNull
+            {
+                self.uuid = self.default_uuid
+                let message = [":avail":  "yes", ":message":  "Hello World"]
+                self.myRootRef.childByAppendingPath(self.uuid).setValue(message)
+            }
         })
     }
     
