@@ -35,13 +35,27 @@ class ViewController: UIViewController, UITextFieldDelegate
             self.receiveText.text = ("\(snapshot.key) -> \(snapshot.value)")
         })*/
         
-        self.myRootRef.observeEventType(.Value, withBlock: {
+        self.myRootRef.observeSingleEventOfType(.Value, withBlock: {
             snap in
             if snap.value is NSNull
             {
                 self.uuid = self.default_uuid
                 let message = [":avail":  "yes", ":message":  "Hello World"]
                 self.myRootRef.childByAppendingPath(self.uuid).setValue(message)
+            }
+            else
+            {
+                self.myRootRef.queryOrderedByKey().observeSingleEventOfType(.ChildAdded, withBlock:
+                {
+                    snapshot in
+                    if(snapshot.value["avail"] as? String == "yes")
+                    {
+                        self.uuid = snapshot.key
+                        let message = [":avail":  "no", ":message":  "Hello World"]
+                        self.myRootRef.childByAppendingPath(self.uuid).setValue(message)
+                    }
+                        
+                })
             }
         })
     }
