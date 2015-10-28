@@ -17,6 +17,7 @@ class ViewController: UIViewController, UITextFieldDelegate
 
     // Create a reference to a Firebase location
     var myRootRef = Firebase(url:"https://incandescent-torch-8912.firebaseio.com/")
+    var default_uuid = NSUUID().UUIDString
     
     override func viewDidLoad()
     {
