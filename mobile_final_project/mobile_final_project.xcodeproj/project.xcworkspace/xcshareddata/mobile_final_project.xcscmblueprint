@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "EEAE273A3EC8238B6D2990C7FCD73AE6422B64A2+++D595042",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "EEAE273A3EC8238B6D2990C7FCD73AE6422B64A2+++BCB2C56" : 0,
+    "EEAE273A3EC8238B6D2990C7FCD73AE6422B64A2+++D595042" : 0,
+    "EEAE273A3EC8238B6D2990C7FCD73AE6422B64A2+++07D194C" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A4644E67-9047-42E1-894B-E7DEF703F042",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "EEAE273A3EC8238B6D2990C7FCD73AE6422B64A2+++BCB2C56" : "",
+    "EEAE273A3EC8238B6D2990C7FCD73AE6422B64A2+++D595042" : "mobile_computing_project\/",
+    "EEAE273A3EC8238B6D2990C7FCD73AE6422B64A2+++07D194C" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "mobile_final_project",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "mobile_final_project\/mobile_final_project.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/cray1006\/mobile_computing_project.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EEAE273A3EC8238B6D2990C7FCD73AE6422B64A2+++07D194C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/cray1006\/mobile_computing_project.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EEAE273A3EC8238B6D2990C7FCD73AE6422B64A2+++BCB2C56"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/cray1006\/mobile_computing_project.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EEAE273A3EC8238B6D2990C7FCD73AE6422B64A2+++D595042"
+    }
+  ]
+}
