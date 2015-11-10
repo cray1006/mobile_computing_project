@@ -8,9 +8,10 @@
 
 import UIKit
 import Foundation
+import CoreLocation
 
-class MessagesViewController: JSQMessagesViewController {
-    
+class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelegate
+{
     var user: FAuthData?
     
     var messages = [Message]()
@@ -20,6 +21,7 @@ class MessagesViewController: JSQMessagesViewController {
     var senderImageUrl: String!
     var batchMessages = true
     var ref: Firebase!
+    var locationManager: CLLocationManager!
 
     
     // *** STEP 1: STORE FIREBASE REFERENCES
@@ -35,7 +37,7 @@ class MessagesViewController: JSQMessagesViewController {
             let sender = snapshot.value["sender"] as? String
             let imageUrl = snapshot.value["imageUrl"] as? String
             
-            let message = Message(text: text, sender: sender, imageUrl: imageUrl)
+            let message = Message(text: text, sender: sender, imageUrl: imageUrl, latitude: self.locationManager.location!.coordinate.latitude, longitude: self.locationManager.location!.coordinate.longitude)
             self.messages.append(message)
             self.finishReceivingMessage()
         })
@@ -49,17 +51,19 @@ class MessagesViewController: JSQMessagesViewController {
         self.finishReceivingMessage()*/
     }
     
-    func sendMessage(text: String!, sender: String!) {
+    func sendMessage(text: String!, sender: String!, latitude: CLLocationDegrees!, longitude: CLLocationDegrees!) {
         // ADD A MESSAGE TO FIREBASE
         messagesRef.childByAutoId().setValue([
             "text":text,
             "sender":sender,
-            "imageUrl":senderImageUrl
+            "imageUrl":senderImageUrl,
+            "latitude":latitude,
+            "longitude":longitude
         ])
     }
     
     func tempSendMessage(text: String!, sender: String!) {
-        let message = Message(text: text, sender: sender, imageUrl: senderImageUrl)
+        let message = Message(text: text, sender: sender, imageUrl: senderImageUrl, latitude: self.locationManager.location!.coordinate.latitude, longitude: self.locationManager.location!.coordinate.longitude)
         messages.append(message)
     }
     
@@ -113,7 +117,22 @@ class MessagesViewController: JSQMessagesViewController {
         }
         
         setupFirebase()
+        
+        if (CLLocationManager.locationServicesEnabled()) //checking if location services are activated
+        {
+            self.locationManager = CLLocationManager()  //initializing location manager
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.startUpdatingLocation()
+        }
     }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
+        //foobaw
+    }
+    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -139,7 +158,7 @@ class MessagesViewController: JSQMessagesViewController {
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, sender: String!, date: NSDate!) {
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
 
-        sendMessage(text, sender: sender)
+        sendMessage(text, sender: sender, latitude: self.locationManager.location!.coordinate.latitude, longitude: self.locationManager.location!.coordinate.longitude)
         
         finishSendingMessage()
     }
