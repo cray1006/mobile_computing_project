@@ -8,9 +8,10 @@
 
 import UIKit
 import Foundation
+import CoreLocation
 
-class MessagesViewController: JSQMessagesViewController {
-    
+class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelegate
+{
     var user: FAuthData?
     
     var messages = [Message]()
@@ -20,6 +21,7 @@ class MessagesViewController: JSQMessagesViewController {
     var senderImageUrl: String!
     var batchMessages = true
     var ref: Firebase!
+    var locationManager: CLLocationManager!
 
     
     // *** STEP 1: STORE FIREBASE REFERENCES
@@ -113,6 +115,15 @@ class MessagesViewController: JSQMessagesViewController {
         }
         
         setupFirebase()
+        
+        if (CLLocationManager.locationServicesEnabled()) //checking if location services are activated
+        {
+            self.locationManager = CLLocationManager()  //initializing location manager
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.startUpdatingLocation()
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

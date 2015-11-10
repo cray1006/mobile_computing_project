@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class Message : NSObject, JSQMessageData {
     var text_: String
