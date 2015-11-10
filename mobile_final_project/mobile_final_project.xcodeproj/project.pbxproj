@@ -19,6 +19,7 @@
 		252C672C1BDFB24B00FF5E1F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 252C672B1BDFB24B00FF5E1F /* libc++.tbd */; };
 		252C672E1BDFB25400FF5E1F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 252C672D1BDFB25400FF5E1F /* libicucore.tbd */; };
 		252C67301BDFB2A600FF5E1F /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 252C672F1BDFB2A600FF5E1F /* Firebase.framework */; };
+		25DBC1AF1BF2A5AD008C469A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DBC1AE1BF2A5AD008C469A /* AudioToolbox.framework */; };
 		76EC819C1BF11DE00004A388 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC819B1BF11DE00004A388 /* MessagesViewController.swift */; };
 		76EC819E1BF11DFE0004A388 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76EC819D1BF11DFE0004A388 /* Main.storyboard */; };
 		76EC81FA1BF1208F0004A388 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 76EC81A41BF1208F0004A388 /* bubble.png */; };
@@ -110,6 +111,7 @@
 		252C672B1BDFB24B00FF5E1F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		252C672D1BDFB25400FF5E1F /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		252C672F1BDFB2A600FF5E1F /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
+		25DBC1AE1BF2A5AD008C469A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		76EC819A1BF11DD70004A388 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		76EC819B1BF11DE00004A388 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		76EC819D1BF11DFE0004A388 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25DBC1AF1BF2A5AD008C469A /* AudioToolbox.framework in Frameworks */,
 				252C672E1BDFB25400FF5E1F /* libicucore.tbd in Frameworks */,
 				252C67301BDFB2A600FF5E1F /* Firebase.framework in Frameworks */,
 				252C672C1BDFB24B00FF5E1F /* libc++.tbd in Frameworks */,
@@ -283,6 +286,7 @@
 		76EC81A31BF11FFE0004A388 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				25DBC1AE1BF2A5AD008C469A /* AudioToolbox.framework */,
 				252C672F1BDFB2A600FF5E1F /* Firebase.framework */,
 				252C672D1BDFB25400FF5E1F /* libicucore.tbd */,
 				252C672B1BDFB24B00FF5E1F /* libc++.tbd */,
@@ -448,7 +452,7 @@
 				76EC81F81BF1208F0004A388 /* Views */,
 			);
 			name = JSQMessagesViewController;
-			path = "../../../../../Downloads/ios-swift-chat-example-master/JSQMessagesViewController/JSQMessagesViewController";
+			path = JSQMessagesViewController/JSQMessagesViewController;
 			sourceTree = "<group>";
 		};
 		76EC822D1BF120980004A388 /* Classes */ = {
@@ -466,7 +470,7 @@
 				76EC822D1BF120980004A388 /* Classes */,
 			);
 			name = JSQSystemSoundPlayer;
-			path = "../../../../../Downloads/ios-swift-chat-example-master/JSQSystemSoundPlayer/JSQSystemSoundPlayer";
+			path = JSQSystemSoundPlayer/JSQSystemSoundPlayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
