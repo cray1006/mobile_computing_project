@@ -22,22 +22,27 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
     var batchMessages = true
     var ref: Firebase!
     var locationManager: CLLocationManager!
+    var userID: String!
 
     
     // *** STEP 1: STORE FIREBASE REFERENCES
     var messagesRef: Firebase!
+    var userRef: Firebase!
 
     func setupFirebase() {
         // STEP 2: SETUP FIREBASE
         messagesRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/messages")
+        userRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/users")
 
         // RECEIVE MESSAGES FROM FIREBASE (limited to latest 25 messages)
         messagesRef.queryLimitedToNumberOfChildren(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
             let text = snapshot.value["text"] as? String
             let sender = snapshot.value["sender"] as? String
             let imageUrl = snapshot.value["imageUrl"] as? String
+            let longitude = snapshot.value["longitude"] as? CLLocationDegrees
+            let latitude = snapshot.value["latitude"] as? CLLocationDegrees
             
-            let message = Message(text: text, sender: sender, imageUrl: imageUrl, latitude: self.locationManager.location!.coordinate.latitude, longitude: self.locationManager.location!.coordinate.longitude)
+            let message = Message(text: text, sender: sender, imageUrl: imageUrl, latitude: latitude, longitude: longitude)
             self.messages.append(message)
             self.finishReceivingMessage()
         })
@@ -116,8 +121,6 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             senderImageUrl = ""
         }
         
-        setupFirebase()
-        
         if (CLLocationManager.locationServicesEnabled()) //checking if location services are activated
         {
             self.locationManager = CLLocationManager()  //initializing location manager
@@ -126,6 +129,17 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             self.locationManager.requestAlwaysAuthorization()
             self.locationManager.startUpdatingLocation()
         }
+        
+        setupFirebase()
+        
+        // Generate unique userID
+        userID = String(Int(NSTimeIntervalSince1970) + rand())
+        
+        //Add User to Firebase
+        userRef.childByAppendingPath(userID).setValue([
+            "latitude": self.locationManager.location!.coordinate.latitude,
+            "longitude": self.locationManager.location!.coordinate.latitude,
+            "paired": false ])
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
