@@ -39,10 +39,8 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             let text = snapshot.value["text"] as? String
             let sender = snapshot.value["sender"] as? String
             let imageUrl = snapshot.value["imageUrl"] as? String
-            let longitude = snapshot.value["longitude"] as? CLLocationDegrees
-            let latitude = snapshot.value["latitude"] as? CLLocationDegrees
             
-            let message = Message(text: text, sender: sender, imageUrl: imageUrl, latitude: latitude, longitude: longitude)
+            let message = Message(text: text, sender: sender, imageUrl: imageUrl)
             self.messages.append(message)
             self.finishReceivingMessage()
         })
@@ -56,19 +54,17 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         self.finishReceivingMessage()*/
     }
     
-    func sendMessage(text: String!, sender: String!, latitude: CLLocationDegrees!, longitude: CLLocationDegrees!) {
+    func sendMessage(text: String!, sender: String!) {
         // ADD A MESSAGE TO FIREBASE
         messagesRef.childByAutoId().setValue([
             "text":text,
             "sender":sender,
             "imageUrl":senderImageUrl,
-            "latitude":latitude,
-            "longitude":longitude
         ])
     }
     
     func tempSendMessage(text: String!, sender: String!) {
-        let message = Message(text: text, sender: sender, imageUrl: senderImageUrl, latitude: self.locationManager.location!.coordinate.latitude, longitude: self.locationManager.location!.coordinate.longitude)
+        let message = Message(text: text, sender: sender, imageUrl: senderImageUrl)
         messages.append(message)
     }
     
@@ -140,6 +136,8 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             "latitude": self.locationManager.location!.coordinate.latitude,
             "longitude": self.locationManager.location!.coordinate.latitude,
             "paired": false ])
+        
+        //add code to pair user here
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
@@ -172,7 +170,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, sender: String!, date: NSDate!) {
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
 
-        sendMessage(text, sender: sender, latitude: self.locationManager.location!.coordinate.latitude, longitude: self.locationManager.location!.coordinate.longitude)
+        sendMessage(text, sender: userID)
         
         finishSendingMessage()
     }
