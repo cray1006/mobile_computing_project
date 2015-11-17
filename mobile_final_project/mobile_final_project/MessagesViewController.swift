@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import CoreLocation
+import Darwin
 
 class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelegate
 {
@@ -23,6 +24,12 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
     var ref: Firebase!
     var locationManager: CLLocationManager!
     var userID: String!
+    var buddy:  String!
+    var temp_buddy:  String!
+    var range:  Double!
+    var min_d:  Double!
+    var latitude:  CLLocationDegrees!
+    var longitude:  CLLocationDegrees!
 
     
     // *** STEP 1: STORE FIREBASE REFERENCES
@@ -41,6 +48,11 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             let imageUrl = snapshot.value["imageUrl"] as? String
             
             let message = Message(text: text, sender: sender, imageUrl: imageUrl)
+            
+            if(sender == self.buddy)
+            {
+                 self.messages.append(message)
+            }
             self.messages.append(message)
             self.finishReceivingMessage()
         })
@@ -105,7 +117,12 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         super.viewDidLoad()
         inputToolbar!.contentView!.leftBarButtonItem = nil
         automaticallyScrollsToMostRecentMessage = true
-        navigationController?.navigationBar.topItem?.title = "Logout"
+        navigationController?.navigationBar.topItem?.title = "Pen Pal"
+        
+        range = 1000
+        min_d = 0
+        buddy = ""
+        temp_buddy = ""
         
         sender = (sender != nil) ? sender : "Anonymous"
         let profileImageUrl = user?.providerData["cachedUserProfile"]?["profile_image_url_https"] as? NSString
@@ -126,6 +143,9 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             self.locationManager.startUpdatingLocation()
         }
         
+        latitude = self.locationManager.location!.coordinate.latitude
+        longitude = self.locationManager.location!.coordinate.longitude
+        
         setupFirebase()
         
         // Generate unique userID
@@ -133,11 +153,34 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         
         //Add User to Firebase
         userRef.childByAppendingPath(userID).setValue([
-            "latitude": self.locationManager.location!.coordinate.latitude,
-            "longitude": self.locationManager.location!.coordinate.latitude,
-            "paired": false ])
+            "latitude": latitude,
+            "longitude": longitude,
+            "paired": false,
+            "buddy": ""])
         
-        //add code to pair user here
+        //ADD CODE TO PAIR USER HERE!
+        userRef.queryOrderedByChild("paired").observeEventType(.ChildAdded, withBlock:
+            { snapshot in
+                if let pair = snapshot.value["paired"] as? Bool
+                {
+                    let a = snapshot.value["latitude"] as? Double
+                    let b = snapshot.value["longitude"] as? Double
+                    let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
+                    if(!pair && (d <= self.range) && (snapshot.key != self.userID) && (self.buddy == ""))
+                    {
+                        self.buddy = snapshot.key
+                    }
+                    else if(!pair)
+                    {
+                        self.temp_buddy = snapshot.key
+                    }
+                }
+            })
+        
+        if(buddy == "")
+        {
+            buddy = temp_buddy
+        }
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
