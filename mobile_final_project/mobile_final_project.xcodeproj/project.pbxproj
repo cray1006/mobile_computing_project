@@ -20,6 +20,7 @@
 		252C672E1BDFB25400FF5E1F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 252C672D1BDFB25400FF5E1F /* libicucore.tbd */; };
 		252C67301BDFB2A600FF5E1F /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 252C672F1BDFB2A600FF5E1F /* Firebase.framework */; };
 		25DBC1AF1BF2A5AD008C469A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DBC1AE1BF2A5AD008C469A /* AudioToolbox.framework */; };
+		762F34961BFFA118007EA211 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762F34951BFFA118007EA211 /* SettingsViewController.swift */; };
 		76EC819C1BF11DE00004A388 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC819B1BF11DE00004A388 /* MessagesViewController.swift */; };
 		76EC819E1BF11DFE0004A388 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76EC819D1BF11DFE0004A388 /* Main.storyboard */; };
 		76EC81FA1BF1208F0004A388 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 76EC81A41BF1208F0004A388 /* bubble.png */; };
@@ -112,6 +113,7 @@
 		252C672D1BDFB25400FF5E1F /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		252C672F1BDFB2A600FF5E1F /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
 		25DBC1AE1BF2A5AD008C469A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		762F34951BFFA118007EA211 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		76EC819A1BF11DD70004A388 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		76EC819B1BF11DE00004A388 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		76EC819D1BF11DFE0004A388 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				76EC819B1BF11DE00004A388 /* MessagesViewController.swift */,
 				76EC82301BF120C00004A388 /* Message.swift */,
 				76EC819D1BF11DFE0004A388 /* Main.storyboard */,
+				762F34951BFFA118007EA211 /* SettingsViewController.swift */,
 				252C66FE1BDFB1F600FF5E1F /* Assets.xcassets */,
 				252C67001BDFB1F700FF5E1F /* LaunchScreen.storyboard */,
 				252C67031BDFB1F700FF5E1F /* Info.plist */,
@@ -651,6 +654,7 @@
 				76EC82231BF1208F0004A388 /* JSQMessagesInputToolbar.m in Sources */,
 				76EC821D1BF1208F0004A388 /* JSQMessagesCollectionViewCell.m in Sources */,
 				76EC82111BF1208F0004A388 /* JSQMessagesKeyboardController.m in Sources */,
+				762F34961BFFA118007EA211 /* SettingsViewController.swift in Sources */,
 				76EC821B1BF1208F0004A388 /* JSQMessage.m in Sources */,
 				76EC82241BF1208F0004A388 /* JSQMessagesLabel.m in Sources */,
 				76EC82201BF1208F0004A388 /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
