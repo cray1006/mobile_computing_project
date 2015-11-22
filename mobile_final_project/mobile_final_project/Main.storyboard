@@ -21,15 +21,18 @@
                             <tableViewSection headerTitle="Basic Settings" id="PEu-30-0YE">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="6rQ-BO-VWU">
-                                        <rect key="frame" x="0.0" y="113.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="114" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6rQ-BO-VWU" id="YgV-q4-ZGU">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RaJ-Bq-Ecy">
                                                     <rect key="frame" x="543" y="6" width="51" height="31"/>
                                                     <animations/>
+                                                    <connections>
+                                                        <action selector="RangeSwitch:" destination="xsI-b2-8gR" eventType="valueChanged" id="LHX-Xk-0yC"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pair on distance?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbE-WU-RAZ">
                                                     <rect key="frame" x="8" y="11" width="131" height="21"/>
@@ -66,16 +69,6 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Pair Range" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r28-A7-htS">
-                                                    <rect key="frame" x="58" y="11" width="124" height="21"/>
-                                                    <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="124" id="7c0-Ms-meN"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKo-RU-xmO">
                                                     <rect key="frame" x="537" y="11" width="55" height="21"/>
                                                     <constraints>
@@ -91,6 +84,16 @@
                                                         <action selector="rangevaluechanged:" destination="xsI-b2-8gR" eventType="valueChanged" id="GOt-EG-oXi"/>
                                                     </connections>
                                                 </slider>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Pair Range" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r28-A7-htS">
+                                                    <rect key="frame" x="58" y="11" width="124" height="21"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="124" id="7c0-Ms-meN"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <animations/>
                                             <constraints>
@@ -129,6 +132,9 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L1u-cP-jYi">
                                                     <rect key="frame" x="543" y="6" width="51" height="31"/>
                                                     <animations/>
+                                                    <connections>
+                                                        <action selector="InterestSwitch:" destination="xsI-b2-8gR" eventType="valueChanged" id="uYU-il-99O"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <animations/>
@@ -285,6 +291,7 @@
                         <outlet property="interest3" destination="L1g-VV-EfZ" id="twy-Y1-nKr"/>
                         <outlet property="rangeslider" destination="IR2-be-WGr" id="g2c-dk-wuu"/>
                         <outlet property="rangetext" destination="EKo-RU-xmO" id="Ssx-JH-nns"/>
+                        <outlet property="staticRangeText" destination="r28-A7-htS" id="aKp-u1-aRl"/>
                         <outlet property="toggle1" destination="RaJ-Bq-Ecy" id="KVg-TF-Cwu"/>
                         <outlet property="toggle2" destination="L1u-cP-jYi" id="kt3-pA-Uk4"/>
                         <segue destination="vXZ-lx-hvc" kind="show" identifier="toFireChat" id="oaI-eF-fPy"/>

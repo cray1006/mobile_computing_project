@@ -134,7 +134,9 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             senderImageUrl = ""
         }
         
-        if (CLLocationManager.locationServicesEnabled()) //checking if location services are activated
+        setupFirebase()
+        
+       /* if (CLLocationManager.locationServicesEnabled()) //checking if location services are activated
         {
             self.locationManager = CLLocationManager()  //initializing location manager
             self.locationManager.delegate = self
@@ -146,7 +148,6 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         latitude = self.locationManager.location!.coordinate.latitude
         longitude = self.locationManager.location!.coordinate.longitude
         
-        setupFirebase()
         
         // Generate unique userID
         userID = String(Int(NSTimeIntervalSince1970) + rand())
@@ -157,7 +158,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             "longitude": longitude,
             "paired": false,
             "buddy": ""])
-        
+
         //ADD CODE TO PAIR USER HERE!
         userRef.queryOrderedByChild("paired").observeEventType(.ChildAdded, withBlock:
             { snapshot in
@@ -181,6 +182,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         {
             buddy = temp_buddy
         }
+    */
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
