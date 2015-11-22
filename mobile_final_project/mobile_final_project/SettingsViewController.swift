@@ -7,9 +7,14 @@
 //
 
 import Foundation
+import CoreLocation
 
-class SettingsViewController: UITableViewController
+class SettingsViewController: UITableViewController, CLLocationManagerDelegate
 {
+    
+    var locationManager: CLLocationManager!
+    var latitude: CLLocationDegrees!
+    var longitude: CLLocationDegrees!
 
     @IBOutlet weak var toggle1: UISwitch!
     @IBOutlet weak var toggle2: UISwitch!
@@ -21,6 +26,15 @@ class SettingsViewController: UITableViewController
     @IBOutlet weak var interest3: UITextField!
     @IBOutlet weak var codename: UITextField!
     
+    @IBAction func ButtonPressed(sender: UIBarButtonItem) {
+        
+        // ADD LOCATION RETRIEVAL HERE
+        // ADD CODE TO INSERT NEW USER HERE
+        // PAIR USERS HERE
+        // SEND USER & PAIRED USER INFO TO NEXT VIEW
+            
+        performSegueWithIdentifier("toFireChat", sender: self)
+    }
 
     @IBAction func rangevaluechanged(sender: UISlider) {
         let currentvalue = Int(sender.value)
