@@ -19,6 +19,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     var location:CLLocationCoordinate2D!
     var pairondistance = 1
     var paironinterest = 1
+    var userID = ""
+    var buddyID = ""
 
     @IBOutlet weak var toggle1: UISwitch!
     @IBOutlet weak var toggle2: UISwitch!
@@ -58,8 +60,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         userRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/users")
         
         // Generate unique userID
-        
-        let userID = String(Int(NSDate().timeIntervalSinceReferenceDate) + rand())
+        userID = String(Int(NSDate().timeIntervalSinceReferenceDate) + rand())
         
         //
         print(userID)
@@ -84,6 +85,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
             n = codename.text!
         }
         
+        // Adds new user
         userRef.childByAppendingPath(userID).setValue([
             "codename":  n,
             "interest1": i1,
@@ -98,10 +100,47 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     }
     
     func pairUsers(){
+        /*
+        userRef.queryOrderedByChild("paired").observeEventType(.ChildAdded, withBlock:
+        { snapshot in
+        if let pair = snapshot.value["paired"] as? Bool
+        {
+        let a = snapshot.value["latitude"] as? Double
+        let b = snapshot.value["longitude"] as? Double
+        let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
+        if(!pair && (d <= self.range) && (snapshot.key != self.userID) && (self.buddy == ""))
+        {
+        self.buddy = snapshot.key
+        }
+        else if(!pair)
+        {
+        self.temp_buddy = snapshot.key
+        }
+        }
+        })
+        
+        if(buddy == "")
+        {
+        buddy = temp_buddy
+        }
+        */
+        
+        buddyID = ""
         performSegueWithIdentifier("toFireChat", sender: self)
         
     }
     
+ 
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        if (segue.identifier == "toFireChat") {
+            var svc = segue!.destinationViewController as! MessagesViewController;
+            
+            // Pass userID and buddyID to next view
+            svc.userID = userID
+            svc.buddyID = buddyID
+            
+        }
+    }
     @IBAction func ButtonPressed(sender: UIBarButtonItem) {
         
         insertNewUser()

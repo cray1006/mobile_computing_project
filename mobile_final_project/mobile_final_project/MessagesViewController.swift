@@ -15,6 +15,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
 {
     var user: FAuthData?
     
+    
     var messages = [Message]()
     var avatars = Dictionary<String, UIImage>()
     var outgoingBubbleImageView = JSQMessagesBubbleImageFactory.outgoingMessageBubbleImageViewWithColor(UIColor.jsq_messageBubbleLightGrayColor())
@@ -24,6 +25,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
     var ref: Firebase!
     var locationManager: CLLocationManager!
     var userID: String!
+    var buddyID: String!
     var buddy:  String!
     var temp_buddy:  String!
     var range:  Double!
@@ -194,6 +196,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         collectionView!.collectionViewLayout.springinessEnabled = true
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
