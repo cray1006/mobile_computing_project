@@ -51,11 +51,10 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             
             let message = Message(text: text, sender: sender, imageUrl: imageUrl)
             
-            if(sender == self.buddy)
+            if((sender == self.buddyID) || (sender == self.userID))
             {
                  self.messages.append(message)
             }
-            self.messages.append(message)
             self.finishReceivingMessage()
         })
         
@@ -121,11 +120,6 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         automaticallyScrollsToMostRecentMessage = true
         navigationController?.navigationBar.topItem?.title = "Pen Pal"
         
-        range = 1000
-        min_d = 0
-        buddy = ""
-        temp_buddy = ""
-        
         sender = (sender != nil) ? sender : "Anonymous"
         let profileImageUrl = user?.providerData["cachedUserProfile"]?["profile_image_url_https"] as? NSString
         if let urlString = profileImageUrl {
@@ -137,61 +131,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         }
         
         setupFirebase()
-        
-       /* if (CLLocationManager.locationServicesEnabled()) //checking if location services are activated
-        {
-            self.locationManager = CLLocationManager()  //initializing location manager
-            self.locationManager.delegate = self
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            self.locationManager.requestAlwaysAuthorization()
-            self.locationManager.startUpdatingLocation()
-        }
-        
-        latitude = self.locationManager.location!.coordinate.latitude
-        longitude = self.locationManager.location!.coordinate.longitude
-        
-        
-        // Generate unique userID
-        userID = String(Int(NSTimeIntervalSince1970) + rand())
-        
-        //Add User to Firebase
-        userRef.childByAppendingPath(userID).setValue([
-            "latitude": latitude,
-            "longitude": longitude,
-            "paired": false,
-            "buddy": ""])
-
-        //ADD CODE TO PAIR USER HERE!
-        userRef.queryOrderedByChild("paired").observeEventType(.ChildAdded, withBlock:
-            { snapshot in
-                if let pair = snapshot.value["paired"] as? Bool
-                {
-                    let a = snapshot.value["latitude"] as? Double
-                    let b = snapshot.value["longitude"] as? Double
-                    let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
-                    if(!pair && (d <= self.range) && (snapshot.key != self.userID) && (self.buddy == ""))
-                    {
-                        self.buddy = snapshot.key
-                    }
-                    else if(!pair)
-                    {
-                        self.temp_buddy = snapshot.key
-                    }
-                }
-            })
-        
-        if(buddy == "")
-        {
-            buddy = temp_buddy
-        }
-    */
     }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-    {
-        //foobaw
-    }
-    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)

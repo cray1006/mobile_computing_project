@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import Firebase
 
 
 class SettingsViewController: UITableViewController, CLLocationManagerDelegate
@@ -17,10 +18,12 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     var latitude: CLLocationDegrees!
     var longitude: CLLocationDegrees!
     var location:CLLocationCoordinate2D!
-    var pairondistance = 1
-    var paironinterest = 1
+    var pairondistance = 1.0
+    var paironinterest = 1.0
     var userID = ""
     var buddyID = ""
+    var temp_buddy = ""
+    var paired = false
 
     @IBOutlet weak var toggle1: UISwitch!
     @IBOutlet weak var toggle2: UISwitch!
@@ -57,13 +60,12 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     }
     
     func insertNewUser(){
-        userRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/users")
         
         // Generate unique userID
         userID = String(Int(NSDate().timeIntervalSinceReferenceDate) + rand())
         
         //
-        print(userID)
+        print("uid:  " + userID)
         
         var i1 = ""
         if (!interest1.text!.isEmpty){
@@ -85,6 +87,43 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
             n = codename.text!
         }
         
+        userRef.queryOrderedByKey().observeEventType(.Value, withBlock:
+            { snapshot in
+                if(!(snapshot.value is NSNull))
+                {
+                    print(snapshot.childrenCount)
+                    let enumerator = snapshot.children
+                    while let rest = enumerator.nextObject() as? FDataSnapshot
+                    {
+                        let pair = rest.value["paired"] as? Int
+                        let a = rest.value["latitude"] as? Double
+                        let b = rest.value["longitude"] as? Double
+                        let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
+                        if((pair == 0) && (d <= 100) && (rest.key != self.userID) && (self.buddyID == ""))
+                        {
+                            self.buddyID = rest.key
+                            break
+                        }
+                        else if((pair == 0) && (rest.key != self.userID))
+                        {
+                            self.temp_buddy = rest.key
+                        }
+                    }
+                
+                    if((self.buddyID == "") && (self.temp_buddy != ""))
+                    {
+                        self.buddyID = self.temp_buddy
+                    }
+                
+                    print(self.buddyID)
+                    
+                    if((self.buddyID != "") && !self.paired)
+                    {
+                        self.pairUsers()
+                    }
+                }
+        })
+        
         // Adds new user
         userRef.childByAppendingPath(userID).setValue([
             "codename":  n,
@@ -96,38 +135,26 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
             "latitude": self.latitude,
             "longitude": self.longitude])
         
-        pairUsers()
+        userRef.childByAppendingPath(userID).updateChildValues(["paired":  0])
     }
     
-    func pairUsers(){
-        /*
-        userRef.queryOrderedByChild("paired").observeEventType(.ChildAdded, withBlock:
-        { snapshot in
-        if let pair = snapshot.value["paired"] as? Bool
-        {
-        let a = snapshot.value["latitude"] as? Double
-        let b = snapshot.value["longitude"] as? Double
-        let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
-        if(!pair && (d <= self.range) && (snapshot.key != self.userID) && (self.buddy == ""))
-        {
-        self.buddy = snapshot.key
-        }
-        else if(!pair)
-        {
-        self.temp_buddy = snapshot.key
-        }
-        }
-        })
+    func pairUsers()
+    {
+        self.paired = true
+        let buddyRef = self.userRef.childByAppendingPath(buddyID)
+        let uRef = self.userRef.childByAppendingPath(userID)
         
-        if(buddy == "")
-        {
-        buddy = temp_buddy
-        }
-        */
+        let pairUpdate = ["paired":  1]
+        buddyRef.updateChildValues(pairUpdate)
+        uRef.updateChildValues(pairUpdate)
         
-        buddyID = ""
+        let buddyUpdate = ["buddy":  userID]
+        let userUpdate = ["buddy":  buddyID]
+        buddyRef.updateChildValues(buddyUpdate)
+        uRef.updateChildValues(userUpdate)
+        
+        //buddyID = ""
         performSegueWithIdentifier("toFireChat", sender: self)
-        
     }
     
  
@@ -141,6 +168,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
             
         }
     }
+    
     @IBAction func ButtonPressed(sender: UIBarButtonItem) {
         
         insertNewUser()
@@ -160,6 +188,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        userRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/users")
+        
         codename.text = "Anonymous"
         rangetext.text = "500"
         interest1.text = ""
@@ -167,24 +197,25 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         interest3.text = ""
         
         
-        self.locationManager = CLLocationManager()  //initializing location manager
-        
-        //self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.requestWhenInUseAuthorization()
-        
-        if (CLLocationManager.locationServicesEnabled()) {
+        if (CLLocationManager.locationServicesEnabled()) //checking if location services are activated
+        {
+            self.locationManager = CLLocationManager()  //initializing location manager
             self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager.requestAlwaysAuthorization()
             self.locationManager.startUpdatingLocation()
         }
-        
-    }
-    
-    @objc func locationManager(manager: CLLocationManager,didUpdateLocations locations: [CLLocation]) {
-        
+
         self.latitude = self.locationManager.location!.coordinate.latitude
         self.longitude = self.locationManager.location!.coordinate.longitude
 
     }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
+        //foobaw
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
