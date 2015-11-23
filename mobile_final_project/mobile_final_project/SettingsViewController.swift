@@ -102,7 +102,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                         let b = rest.value["longitude"] as? Double
                         let c = rest.value["codename"] as? String
                         let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
-                        if((pair == 0) && (d <= 100) && (rest.key != self.userID) && (self.buddyID == ""))
+                        if((pair == 0) && (d <= Double(self.range)) && (rest.key != self.userID) && (self.buddyID == ""))
                         {
                             self.buddyID = rest.key
                             self.buddy = c!
