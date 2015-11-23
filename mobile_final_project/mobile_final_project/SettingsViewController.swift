@@ -22,6 +22,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     var paironinterest = 1.0
     var userID = ""
     var buddyID = ""
+    var buddy = ""
     var temp_buddy = ""
     var paired = false
     var range = 0
@@ -99,15 +100,18 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                         let pair = rest.value["paired"] as? Int
                         let a = rest.value["latitude"] as? Double
                         let b = rest.value["longitude"] as? Double
+                        let c = rest.value["codename"] as? String
                         let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
                         if((pair == 0) && (d <= 100) && (rest.key != self.userID) && (self.buddyID == ""))
                         {
                             self.buddyID = rest.key
+                            self.buddy = c!
                             break
                         }
                         else if((pair == 0) && (rest.key != self.userID))
                         {
                             self.temp_buddy = rest.key
+                            self.buddy = c!
                         }
                     }
                 
@@ -166,7 +170,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
             // Pass userID and buddyID to next view
             svc.userID = userID
             svc.buddyID = buddyID
-            
+            svc.buddy = buddy
         }
     }
     
