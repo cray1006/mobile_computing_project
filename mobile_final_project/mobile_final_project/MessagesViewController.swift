@@ -120,7 +120,8 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         automaticallyScrollsToMostRecentMessage = true
         navigationController?.navigationBar.topItem?.title = "Pen Pal"
         
-        sender = (sender != nil) ? sender : "Anonymous"
+        //sender = (sender != nil) ? sender : "Anonymous"
+        sender = userID
         let profileImageUrl = user?.providerData["cachedUserProfile"]?["profile_image_url_https"] as? NSString
         if let urlString = profileImageUrl {
             setupAvatarImage(sender, imageUrl: urlString as String, incoming: false)

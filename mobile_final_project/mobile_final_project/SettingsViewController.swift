@@ -24,6 +24,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     var buddyID = ""
     var temp_buddy = ""
     var paired = false
+    var range = 0
 
     @IBOutlet weak var toggle1: UISwitch!
     @IBOutlet weak var toggle2: UISwitch!
@@ -180,6 +181,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     @IBAction func rangevaluechanged(sender: UISlider) {
         let currentvalue = Int(sender.value)
         rangetext.text = String(currentvalue)
+        range = currentvalue
     }
 
     
