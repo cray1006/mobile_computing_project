@@ -18,8 +18,8 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
     
     var messages = [Message]()
     var avatars = Dictionary<String, UIImage>()
-    var outgoingBubbleImageView = JSQMessagesBubbleImageFactory.outgoingMessageBubbleImageViewWithColor(UIColor.jsq_messageBubbleLightGrayColor())
-    var incomingBubbleImageView = JSQMessagesBubbleImageFactory.incomingMessageBubbleImageViewWithColor(UIColor.jsq_messageBubbleGreenColor())
+    var outgoingBubbleImageView = JSQMessagesBubbleImageFactory.outgoingMessageBubbleImageViewWithColor(UIColor.jsq_messageBubbleGreenColor())
+    var incomingBubbleImageView = JSQMessagesBubbleImageFactory.incomingMessageBubbleImageViewWithColor(UIColor.jsq_messageBubbleLightGrayColor())
     var senderImageUrl: String!
     var batchMessages = true
     var ref: Firebase!
