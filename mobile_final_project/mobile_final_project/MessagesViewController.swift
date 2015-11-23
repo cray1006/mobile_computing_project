@@ -25,6 +25,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
     var ref: Firebase!
     var locationManager: CLLocationManager!
     var userID: String!
+    var codeName:  String!
     var buddyID: String!
     var buddy:  String!
     var temp_buddy:  String!
