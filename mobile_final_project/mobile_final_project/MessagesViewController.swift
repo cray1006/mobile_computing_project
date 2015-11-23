@@ -232,7 +232,8 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             }
         }
         
-        return NSAttributedString(string:message.sender())
+        //return NSAttributedString(string:message.sender())
+        return NSAttributedString(string:buddy)
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
