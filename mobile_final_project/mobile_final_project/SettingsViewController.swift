@@ -167,6 +167,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         if (segue.identifier == "toFireChat") {
             var svc = segue!.destinationViewController as! MessagesViewController;
             
+            
+            
             // Pass userID and buddyID to next view
             svc.userID = userID
             svc.buddyID = buddyID
@@ -177,6 +179,9 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     @IBAction func ButtonPressed(sender: UIBarButtonItem) {
         
         insertNewUser()
+        
+        self.title = "Waiting..."
+        
         // SEND USER & PAIRED USER INFO TO NEXT VIEW
             
         //performSegueWithIdentifier("toFireChat", sender: self)
@@ -193,6 +198,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.title = "Settings"
         
         userRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/users")
         
