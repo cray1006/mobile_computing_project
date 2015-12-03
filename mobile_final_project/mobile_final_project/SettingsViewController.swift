@@ -182,7 +182,10 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         
         self.title = "Waiting..."
         
-        // SEND USER & PAIRED USER INFO TO NEXT VIEW
+        let waitingAnimation = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        waitingAnimation.hidesWhenStopped = true
+        waitingAnimation.startAnimating()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: waitingAnimation)
             
         //performSegueWithIdentifier("toFireChat", sender: self)
     }
@@ -192,7 +195,12 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         rangetext.text = String(currentvalue)
         range = currentvalue
     }
-
+    
+    override func viewDidAppear(animated: Bool) {
+        self.title = "Settings"
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .Plain, target: self, action: "ButtonPressed:")
+    }
     
     override func viewDidLoad()
     {
@@ -200,6 +208,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         // Do any additional setup after loading the view, typically from a nib.
         
         self.title = "Settings"
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .Plain, target: self, action: "ButtonPressed:")
         
         userRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/users")
         
