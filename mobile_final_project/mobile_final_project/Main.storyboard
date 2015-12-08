@@ -325,7 +325,7 @@
             </objects>
             <point key="canvasLocation" x="444" y="-411"/>
         </scene>
-        <!--Fire Chat-->
+        <!--Pen Pal-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="MessagesViewController" customModule="mobile_final_project" customModuleProvider="target" sceneMemberID="viewController">
@@ -339,7 +339,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Fire Chat" id="Mpb-3E-mHB"/>
+                    <navigationItem key="navigationItem" title="Pen Pal" id="Mpb-3E-mHB"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

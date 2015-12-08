@@ -26,6 +26,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     var buddy = ""
     var temp_buddy = ""
     var paired = false
+    var initialPair = false
     var range = 0
 
     @IBOutlet weak var toggle1: UISwitch!
@@ -63,11 +64,23 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     }
     
     func insertNewUser(){
+        if(initialPair)
+        {
+            let uref = userRef.childByAppendingPath(userID)
+            
+            uref.removeValue()
+            
+            paired = false
+            buddyID = ""
+            temp_buddy = ""
+            buddy = ""
+            latitude = self.locationManager.location!.coordinate.latitude
+            longitude = self.locationManager.location!.coordinate.longitude
+        }
         
         // Generate unique userID
         userID = String(Int(NSDate().timeIntervalSinceReferenceDate) + rand())
         
-        //
         print("uid:  " + userID)
         
         var i1 = ""
@@ -148,6 +161,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     func pairUsers()
     {
         self.paired = true
+        self.initialPair = true
         let buddyRef = self.userRef.childByAppendingPath(buddyID)
         let uRef = self.userRef.childByAppendingPath(userID)
         
@@ -167,7 +181,9 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
  
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         if (segue.identifier == "toFireChat") {
-            var svc = segue!.destinationViewController as! MessagesViewController;
+            let svc = segue!.destinationViewController as! MessagesViewController;
+            
+            
             
             // Pass userID and buddyID to next view
             svc.userID = userID
@@ -180,7 +196,13 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     @IBAction func ButtonPressed(sender: UIBarButtonItem) {
         
         insertNewUser()
-        // SEND USER & PAIRED USER INFO TO NEXT VIEW
+        
+        self.title = "Waiting..."
+        
+        let waitingAnimation = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        waitingAnimation.hidesWhenStopped = true
+        waitingAnimation.startAnimating()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: waitingAnimation)
             
         //performSegueWithIdentifier("toFireChat", sender: self)
     }
@@ -190,12 +212,21 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         rangetext.text = String(currentvalue)
         range = currentvalue
     }
-
+    
+    override func viewDidAppear(animated: Bool) {
+        self.title = "Settings"
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .Plain, target: self, action: "ButtonPressed:")
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.title = "Settings"
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .Plain, target: self, action: "ButtonPressed:")
         
         userRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/users")
         
