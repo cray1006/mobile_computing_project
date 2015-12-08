@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="GfJ-eT-xmT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bHf-g2-68I">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -307,6 +307,65 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IC5-Xy-Do1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1264" y="-411"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="sp2-nQ-nDR">
+            <objects>
+                <viewController id="bHf-g2-68I" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="08a-PD-PkT"/>
+                        <viewControllerLayoutGuide type="bottom" id="v8T-eJ-Zog"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="doO-M7-FY1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Welcome to Pen Pal!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yll-Su-ETc">
+                                <rect key="frame" x="217" y="149" width="219" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Set your interests and display name on the next screen, then press Confirm to start a conversation with a random partner" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fN-dM-Je5">
+                                <rect key="frame" x="155" y="303" width="290" height="126"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndA-54-RqO">
+                                <rect key="frame" x="256" y="550" width="88" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Get Started!"/>
+                                <connections>
+                                    <segue destination="GfJ-eT-xmT" kind="show" id="gez-qI-wBU"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2fN-dM-Je5" firstAttribute="leading" secondItem="doO-M7-FY1" secondAttribute="leadingMargin" constant="24" id="1NV-JW-6vD"/>
+                            <constraint firstItem="ndA-54-RqO" firstAttribute="centerX" secondItem="doO-M7-FY1" secondAttribute="centerX" id="1Pp-fV-qfO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2fN-dM-Je5" secondAttribute="trailing" constant="24" id="51d-Fo-E7t"/>
+                            <constraint firstItem="v8T-eJ-Zog" firstAttribute="top" secondItem="ndA-54-RqO" secondAttribute="bottom" constant="24" id="8a2-cs-R1z"/>
+                            <constraint firstItem="ndA-54-RqO" firstAttribute="top" secondItem="2fN-dM-Je5" secondAttribute="bottom" constant="12" id="JH2-pm-5kd"/>
+                            <constraint firstItem="ndA-54-RqO" firstAttribute="top" secondItem="2fN-dM-Je5" secondAttribute="bottom" constant="24" id="bhk-fl-04V"/>
+                            <constraint firstItem="Yll-Su-ETc" firstAttribute="top" secondItem="08a-PD-PkT" secondAttribute="bottom" constant="96" id="hyl-Yo-AdB"/>
+                            <constraint firstItem="Yll-Su-ETc" firstAttribute="centerX" secondItem="doO-M7-FY1" secondAttribute="centerX" id="pPQ-7C-doF"/>
+                            <constraint firstItem="2fN-dM-Je5" firstAttribute="centerX" secondItem="doO-M7-FY1" secondAttribute="centerX" id="vTc-j9-ySH"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="bhk-fl-04V"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zoA-hb-1sw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-437" y="-434"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3nY-xs-EHq">
