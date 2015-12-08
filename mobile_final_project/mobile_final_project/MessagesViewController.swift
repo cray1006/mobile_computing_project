@@ -46,8 +46,8 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         let buddyRef = userRef.childByAppendingPath(buddyID)
         let uRef = userRef.childByAppendingPath(userID)
         
-        buddyRef.removeValue()
-        uRef.removeValue()
+        //buddyRef.removeValue()
+        //uRef.removeValue()
 
         // RECEIVE MESSAGES FROM FIREBASE (limited to latest 25 messages)
         messagesRef.queryLimitedToNumberOfChildren(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
