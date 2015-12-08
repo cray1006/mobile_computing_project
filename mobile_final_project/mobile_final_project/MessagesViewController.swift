@@ -109,7 +109,8 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         let color = UIColor(red: r, green: g, blue: b, alpha: 0.5)
         
         let nameLength = name.characters.count
-        let initials : String? = name.substringToIndex(sender.startIndex.advancedBy(min(3, nameLength)))
+        //let initials : String? = name.substringToIndex(sender.startIndex.advancedBy(min(3, nameLength)))
+        let initials : String? = codeName.substringToIndex(sender.startIndex.advancedBy(min(3, nameLength)))
         let userImage = JSQMessagesAvatarFactory.avatarWithUserInitials(initials, backgroundColor: color, textColor: UIColor.blackColor(), font: UIFont.systemFontOfSize(CGFloat(13)), diameter: diameter)
         
         avatars[name] = userImage

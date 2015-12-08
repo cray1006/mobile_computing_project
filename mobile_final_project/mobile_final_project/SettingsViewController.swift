@@ -21,6 +21,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     var pairondistance = 1.0
     var paironinterest = 1.0
     var userID = ""
+    var codeName = ""
     var buddyID = ""
     var buddy = ""
     var temp_buddy = ""
@@ -87,6 +88,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         var n = "Anonymous"
         if (!codename.text!.isEmpty){
             n = codename.text!
+            self.codeName = n
         }
         
         userRef.queryOrderedByKey().observeEventType(.Value, withBlock:
@@ -102,7 +104,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                         let b = rest.value["longitude"] as? Double
                         let c = rest.value["codename"] as? String
                         let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
-                        if((pair == 0) && (d <= 100) && (rest.key != self.userID) && (self.buddyID == ""))
+                        if((pair == 0) && (d <= Double(self.range)) && (rest.key != self.userID) && (self.buddyID == ""))
                         {
                             self.buddyID = rest.key
                             self.buddy = c!
@@ -171,6 +173,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
             svc.userID = userID
             svc.buddyID = buddyID
             svc.buddy = buddy
+            svc.codeName = codeName
         }
     }
     
