@@ -25,6 +25,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
     var ref: Firebase!
     var locationManager: CLLocationManager!
     var userID: String!
+    var codeName:  String!
     var buddyID: String!
     var buddy:  String!
     var temp_buddy:  String!
@@ -43,11 +44,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         messagesRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/messages")
         userRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/users")
         
-        let buddyRef = userRef.childByAppendingPath(buddyID)
-        let uRef = userRef.childByAppendingPath(userID)
         
-        //buddyRef.removeValue()
-        //uRef.removeValue()
 
         // RECEIVE MESSAGES FROM FIREBASE (limited to latest 25 messages)
         messagesRef.queryLimitedToNumberOfChildren(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
@@ -61,6 +58,7 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             {
                  self.messages.append(message)
             }
+            self.userRef.childByAppendingPath(sender).removeValue()
             self.finishReceivingMessage()
         })
         
@@ -114,7 +112,15 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         let color = UIColor(red: r, green: g, blue: b, alpha: 0.5)
         
         let nameLength = name.characters.count
-        let initials : String? = name.substringToIndex(sender.startIndex.advancedBy(min(3, nameLength)))
+        var initials : String? = ""
+        if(name == userID)
+        {
+            initials = codeName.substringToIndex(sender.startIndex.advancedBy(min(3, nameLength)))
+        }
+        else
+        {
+            initials = buddy.substringToIndex(sender.startIndex.advancedBy(min(3, nameLength)))
+        }
         let userImage = JSQMessagesAvatarFactory.avatarWithUserInitials(initials, backgroundColor: color, textColor: UIColor.blackColor(), font: UIFont.systemFontOfSize(CGFloat(13)), diameter: diameter)
         
         avatars[name] = userImage
