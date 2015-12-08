@@ -165,7 +165,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
  
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         if (segue.identifier == "toFireChat") {
-            var svc = segue!.destinationViewController as! MessagesViewController;
+            let svc = segue!.destinationViewController as! MessagesViewController;
             
             // Pass userID and buddyID to next view
             svc.userID = userID

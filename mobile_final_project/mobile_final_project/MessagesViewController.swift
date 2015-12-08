@@ -42,6 +42,12 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         // STEP 2: SETUP FIREBASE
         messagesRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/messages")
         userRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/users")
+        
+        let buddyRef = userRef.childByAppendingPath(buddyID)
+        let uRef = userRef.childByAppendingPath(userID)
+        
+        buddyRef.removeValue()
+        uRef.removeValue()
 
         // RECEIVE MESSAGES FROM FIREBASE (limited to latest 25 messages)
         messagesRef.queryLimitedToNumberOfChildren(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
