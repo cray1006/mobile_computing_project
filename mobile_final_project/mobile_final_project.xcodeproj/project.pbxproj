@@ -19,6 +19,7 @@
 		252C672C1BDFB24B00FF5E1F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 252C672B1BDFB24B00FF5E1F /* libc++.tbd */; };
 		252C672E1BDFB25400FF5E1F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 252C672D1BDFB25400FF5E1F /* libicucore.tbd */; };
 		252C67301BDFB2A600FF5E1F /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 252C672F1BDFB2A600FF5E1F /* Firebase.framework */; };
+		257803731C18908C005F8A21 /* test_location_ND.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 257803721C18908C005F8A21 /* test_location_ND.gpx */; };
 		25DBC1AF1BF2A5AD008C469A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DBC1AE1BF2A5AD008C469A /* AudioToolbox.framework */; };
 		762F34961BFFA118007EA211 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762F34951BFFA118007EA211 /* SettingsViewController.swift */; };
 		76EC819C1BF11DE00004A388 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC819B1BF11DE00004A388 /* MessagesViewController.swift */; };
@@ -112,6 +113,7 @@
 		252C672B1BDFB24B00FF5E1F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		252C672D1BDFB25400FF5E1F /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		252C672F1BDFB2A600FF5E1F /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
+		257803721C18908C005F8A21 /* test_location_ND.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = test_location_ND.gpx; path = ../test_location_ND.gpx; sourceTree = "<group>"; };
 		25DBC1AE1BF2A5AD008C469A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		762F34951BFFA118007EA211 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		76EC819A1BF11DD70004A388 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		252C66EB1BDFB1F600FF5E1F = {
 			isa = PBXGroup;
 			children = (
+				257803721C18908C005F8A21 /* test_location_ND.gpx */,
 				76EC81A31BF11FFE0004A388 /* Frameworks */,
 				252C66F61BDFB1F600FF5E1F /* mobile_final_project */,
 				252C670B1BDFB1F700FF5E1F /* mobile_final_projectTests */,
@@ -585,6 +588,7 @@
 			files = (
 				76EC820A1BF1208F0004A388 /* message_received.aiff in Resources */,
 				76EC82001BF1208F0004A388 /* bubble_stroked.png in Resources */,
+				257803731C18908C005F8A21 /* test_location_ND.gpx in Resources */,
 				76EC819E1BF11DFE0004A388 /* Main.storyboard in Resources */,
 				76EC82211BF1208F0004A388 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
 				76EC81FE1BF1208F0004A388 /* bubble_min_tailless.png in Resources */,

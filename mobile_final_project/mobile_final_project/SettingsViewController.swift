@@ -13,21 +13,22 @@ import Firebase
 
 class SettingsViewController: UITableViewController, CLLocationManagerDelegate
 {
-    var userRef: Firebase!
-    var locationManager: CLLocationManager!
+    //declaring variables
+    var userRef: Firebase!  //users in firebase
+    var locationManager: CLLocationManager! //location manager
     var latitude: CLLocationDegrees!
     var longitude: CLLocationDegrees!
     var location:CLLocationCoordinate2D!
-    var pairondistance = 1.0
-    var paironinterest = 1.0
+    var pairondistance = 1.0    //whether or not user will pair on distance
+    var paironinterest = 1.0    //whether or not user will pair on interests
     var userID = ""
-    var codeName = ""
+    var codeName = ""   //user codename
     var buddyID = ""
-    var buddy = ""
+    var buddy = ""  //buddy codename
     var temp_buddy = ""
-    var paired = false
-    var initialPair = false
-    var range = 0
+    var paired = false  //whether or not user is paired
+    var initialPair = false //whether or not user has gone through 1 pairing
+    var range = 0   //
     var totalanon = 0
 
     @IBOutlet weak var toggle1: UISwitch!
@@ -42,21 +43,28 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     @IBOutlet weak var staticRangeText: UILabel!
    
     
-    @IBAction func InterestSwitch(sender: AnyObject) {
-        if self.paironinterest == 1{
+    @IBAction func InterestSwitch(sender: AnyObject)
+    {
+        if self.paironinterest == 1
+        {
             self.paironinterest = 0
-        } else {
+        }
+        else
+        {
             self.paironinterest = 1
         }
     }
     
-    @IBAction func RangeSwitch(sender: AnyObject) {
-        
-        if staticRangeText.textColor == UIColor.lightGrayColor(){
+    @IBAction func RangeSwitch(sender: AnyObject)
+    {
+        if staticRangeText.textColor == UIColor.lightGrayColor()
+        {
             staticRangeText.textColor = UIColor.blackColor()
             rangetext.textColor = UIColor.blackColor()
             self.pairondistance = 1
-        } else {
+        }
+        else
+        {
             staticRangeText.textColor = UIColor.lightGrayColor()
             rangetext.textColor = UIColor.lightGrayColor()
             self.pairondistance = 0
@@ -90,8 +98,6 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
             buddyID = ""
             temp_buddy = ""
             buddy = ""
-            latitude = self.locationManager.location!.coordinate.latitude
-            longitude = self.locationManager.location!.coordinate.longitude
         }
         
         // Generate unique userID
@@ -141,12 +147,13 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                     {
                         if (self.pairondistance == 1) && (self.paironinterest == 0)
                         {
-                            print ("Pair only on distance!")
+                            print ("Pair only on distance")
                             let pair = rest.value["paired"] as? Int
                             let a = rest.value["latitude"] as? Double
                             let b = rest.value["longitude"] as? Double
                             let c = rest.value["codename"] as? String
                             let d = self.calcDistance(self.latitude, long1: self.longitude, lat2: a!, long2: b!)
+                            print("\(d)")
                             if((pair == 0) && (d <= Double(self.range)) && (rest.key != self.userID) && (self.buddyID == ""))
                             {
                                 self.buddyID = rest.key
@@ -213,11 +220,14 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     
                 }
             })
-               
-        if self.buddyID == "" && self.paired == false {
-            print ("No one to pair with in")
-        } else {
-            self.pairUsers()
+        
+        if self.buddyID == "" && self.paired == false
+        {
+            print ("No one to pair with currently")
+        }
+        else
+        {
+           // self.pairUsers()
         }
     }
     
@@ -350,15 +360,12 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
             self.locationManager.requestAlwaysAuthorization()
             self.locationManager.startUpdatingLocation()
         }
-
-        self.latitude = self.locationManager.location!.coordinate.latitude
-        self.longitude = self.locationManager.location!.coordinate.longitude
-
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-        //foobaw
+        self.latitude = self.locationManager.location!.coordinate.latitude
+        self.longitude = self.locationManager.location!.coordinate.longitude
     }
 
     override func didReceiveMemoryWarning() {
