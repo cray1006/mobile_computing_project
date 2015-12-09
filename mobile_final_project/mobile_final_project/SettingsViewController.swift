@@ -131,10 +131,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
             "latitude": self.latitude,
             "longitude": self.longitude,
             "totalanon": self.totalanon])
-        
-       // while (self.paired == false && self.buddyID == ""){
-        if (pairondistance == 1) && (paironinterest == 0){
-            print ("Pair only on distance!")
+       
             userRef.queryOrderedByKey().observeEventType(.Value, withBlock:
             { snapshot in
                 if(!(snapshot.value is NSNull))
@@ -142,59 +139,43 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                     let enumerator = snapshot.children
                     while let rest = enumerator.nextObject() as? FDataSnapshot
                     {
-                        let pair = rest.value["paired"] as? Int
-                        let a = rest.value["latitude"] as? Double
-                        let b = rest.value["longitude"] as? Double
-                        let c = rest.value["codename"] as? String
-                        //let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
-                        let d = self.calcDistance(self.latitude, long1: self.longitude, lat2: a!, long2: b!)
-                        if((pair == 0) && (d <= Double(self.range)) && (rest.key != self.userID) && (self.buddyID == ""))
+                        if (self.pairondistance == 1) && (self.paironinterest == 0)
                         {
-                            self.buddyID = rest.key
-                            self.buddy = c!
-                            self.pairUsers()
-                            break
-                        }
-                    }
-    
-                }
-            })
-        } else if (pairondistance == 0) && (paironinterest == 1){
-            print ("Pair only on interest")
-            userRef.queryOrderedByKey().observeEventType(.Value, withBlock:
-            { snapshot in
-                if(!(snapshot.value is NSNull))
-                {
-                    let enumerator = snapshot.children
-                    while let rest = enumerator.nextObject() as? FDataSnapshot
-                    {
-                        let pair = rest.value["paired"] as? Int
-                        let c = rest.value["codename"] as? String
-                        let b1 = rest.value["interest1"] as? String
-                        let b2 = rest.value["interest2"] as? String
-                        let b3 = rest.value["interest3"] as? String
-                        if((pair == 0) && (rest.key != self.userID) && (self.buddyID == ""))
-                        {
-                            if (self.matchInterest(i1, I2: i2, I3: i3, B1: b1!, B2: b2!, B3: b3!)==1) {
+                            print ("Pair only on distance!")
+                            let pair = rest.value["paired"] as? Int
+                            let a = rest.value["latitude"] as? Double
+                            let b = rest.value["longitude"] as? Double
+                            let c = rest.value["codename"] as? String
+                            let d = self.calcDistance(self.latitude, long1: self.longitude, lat2: a!, long2: b!)
+                            if((pair == 0) && (d <= Double(self.range)) && (rest.key != self.userID) && (self.buddyID == ""))
+                            {
                                 self.buddyID = rest.key
                                 self.buddy = c!
                                 self.pairUsers()
                                 break
                             }
                         }
-                    }
-                }
-            })
-            
-        } else if (pairondistance == 1) && (paironinterest == 1){
-            print ("Pair on both distance and interest")
-            userRef.queryOrderedByKey().observeEventType(.Value, withBlock:
-                { snapshot in
-                    if(!(snapshot.value is NSNull))
-                    {
-                        let enumerator = snapshot.children
-                        while let rest = enumerator.nextObject() as? FDataSnapshot
+                        else if(self.pairondistance == 0) && (self.paironinterest == 1)
                         {
+                            print ("Pair only on interest")
+                            let pair = rest.value["paired"] as? Int
+                            let c = rest.value["codename"] as? String
+                            let b1 = rest.value["interest1"] as? String
+                            let b2 = rest.value["interest2"] as? String
+                            let b3 = rest.value["interest3"] as? String
+                            if((pair == 0) && (rest.key != self.userID) && (self.buddyID == ""))
+                            {
+                                if (self.matchInterest(i1, I2: i2, I3: i3, B1: b1!, B2: b2!, B3: b3!)==1) {
+                                    self.buddyID = rest.key
+                                    self.buddy = c!
+                                    self.pairUsers()
+                                    break
+                                }
+                            }
+                        }
+                        else if(self.pairondistance == 1) && (self.paironinterest == 1)
+                        {
+                            print ("Pair on both distance and interest")
                             let pair = rest.value["paired"] as? Int
                             let a = rest.value["latitude"] as? Double
                             let b = rest.value["longitude"] as? Double
@@ -202,7 +183,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                             let b1 = rest.value["interest1"] as? String
                             let b2 = rest.value["interest2"] as? String
                             let b3 = rest.value["interest3"] as? String
-                           // let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude -   b!), 2))
+                            // let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude -   b!), 2))
                             let d = self.calcDistance(self.latitude, long1: self.longitude, lat2: a!, long2: b!)
                             if((pair == 0) && (d <= Double(self.range)) && (rest.key != self.userID) && (self.buddyID == ""))
                             {
@@ -214,35 +195,25 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                                 }
                             }
                         }
-                        
-                    }
-            })
-        } else {
-            print ("Pair by total anon")
-            userRef.queryOrderedByKey().observeEventType(.Value, withBlock:
-            { snapshot in
-                        if(!(snapshot.value is NSNull))
+                        else
                         {
-                            let enumerator = snapshot.children
-                            while let rest = enumerator.nextObject() as? FDataSnapshot
+                            print ("Pair by total anon")
+                            let pair = rest.value["paired"] as? Int
+                            let c = rest.value["codename"] as? String
+                            let t = rest.value["totalanon"] as? Int
+                            if((pair == 0) && (rest.key != self.userID) && (self.buddyID == "") && (t == 1))
                             {
-                                let pair = rest.value["paired"] as? Int
-                                let c = rest.value["codename"] as? String
-                                let t = rest.value["totalanon"] as? Int
-                                if((pair == 0) && (rest.key != self.userID) && (self.buddyID == "") && (t == 1))
-                                {
-                                    self.buddyID = rest.key
-                                    self.buddy = c!
-                                    self.pairUsers()
-                                    break
-                                }
+                                self.buddyID = rest.key
+                                self.buddy = c!
+                                self.pairUsers()
+                                break
                             }
-                            
                         }
-                })
-            }
-       // }
-        
+                    }
+    
+                }
+            })
+               
         if self.buddyID == "" && self.paired == false {
             print ("No one to pair with in")
         } else {
