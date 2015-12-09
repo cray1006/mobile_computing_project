@@ -80,23 +80,23 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="750" minValue="0.0" maxValue="1500" translatesAutoresizingMaskIntoConstraints="NO" id="IR2-be-WGr">
-                                                    <rect key="frame" x="209" y="6" width="279" height="31"/>
-                                                    <animations/>
-                                                    <connections>
-                                                        <action selector="rangevaluechanged:" destination="xsI-b2-8gR" eventType="valueChanged" id="GOt-EG-oXi"/>
-                                                    </connections>
-                                                </slider>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Range" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r28-A7-htS">
-                                                    <rect key="frame" x="8" y="10" width="124" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Range (m)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r28-A7-htS">
+                                                    <rect key="frame" x="8" y="11" width="88" height="21"/>
                                                     <animations/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="124" id="7c0-Ms-meN"/>
+                                                        <constraint firstAttribute="width" constant="88" id="7c0-Ms-meN"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="750" minValue="0.0" maxValue="1500" translatesAutoresizingMaskIntoConstraints="NO" id="IR2-be-WGr">
+                                                    <rect key="frame" x="158" y="7" width="284" height="31"/>
+                                                    <animations/>
+                                                    <connections>
+                                                        <action selector="rangevaluechanged:" destination="xsI-b2-8gR" eventType="valueChanged" id="GOt-EG-oXi"/>
+                                                    </connections>
+                                                </slider>
                                             </subviews>
                                             <animations/>
                                             <constraints>
@@ -106,9 +106,9 @@
                                                 <constraint firstItem="Pdg-5W-mbs" firstAttribute="leading" secondItem="0uo-us-U4O" secondAttribute="leadingMargin" constant="42" id="OiG-ry-bE1"/>
                                                 <constraint firstItem="EKo-RU-xmO" firstAttribute="firstBaseline" secondItem="r28-A7-htS" secondAttribute="firstBaseline" id="RYC-NO-yFv"/>
                                                 <constraint firstItem="Pdg-5W-mbs" firstAttribute="top" secondItem="r28-A7-htS" secondAttribute="top" id="Rbk-ab-aBq"/>
-                                                <constraint firstItem="IR2-be-WGr" firstAttribute="leading" secondItem="r28-A7-htS" secondAttribute="trailing" constant="29" id="YNt-qO-k6g"/>
-                                                <constraint firstItem="r28-A7-htS" firstAttribute="leading" secondItem="Pdg-5W-mbs" secondAttribute="trailing" constant="8" symbolic="YES" id="mHl-8i-pyX"/>
-                                                <constraint firstItem="EKo-RU-xmO" firstAttribute="leading" secondItem="IR2-be-WGr" secondAttribute="trailing" constant="51" id="n5H-rS-CjL"/>
+                                                <constraint firstItem="IR2-be-WGr" firstAttribute="leading" secondItem="r28-A7-htS" secondAttribute="trailing" constant="64" id="YNt-qO-k6g"/>
+                                                <constraint firstItem="r28-A7-htS" firstAttribute="leading" secondItem="Pdg-5W-mbs" secondAttribute="trailing" constant="-42" id="mHl-8i-pyX"/>
+                                                <constraint firstItem="EKo-RU-xmO" firstAttribute="leading" secondItem="IR2-be-WGr" secondAttribute="trailing" constant="97" id="n5H-rS-CjL"/>
                                                 <constraint firstItem="EKo-RU-xmO" firstAttribute="trailing" secondItem="0uo-us-U4O" secondAttribute="trailingMargin" id="qmx-rj-Zh8"/>
                                                 <constraint firstItem="IR2-be-WGr" firstAttribute="centerY" secondItem="EKo-RU-xmO" secondAttribute="centerY" id="rHz-3L-Imw"/>
                                             </constraints>
