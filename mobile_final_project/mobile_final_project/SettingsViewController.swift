@@ -346,7 +346,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         userRef = Firebase(url: "https://incandescent-torch-8912.firebaseio.com/users")
         
         codename.text = "Anonymous"
-        rangetext.text = "750"
+        rangetext.text = "1000"
         interest1.text = ""
         interest2.text = ""
         interest3.text = ""
