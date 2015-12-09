@@ -28,7 +28,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     var temp_buddy = ""
     var paired = false  //whether or not user is paired
     var initialPair = false //whether or not user has gone through 1 pairing
-    var range = 0   //
+    var range = 1000   //
     var totalanon = 0
 
     @IBOutlet weak var toggle1: UISwitch!
