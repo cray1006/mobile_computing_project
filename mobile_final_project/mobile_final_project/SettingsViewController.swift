@@ -64,6 +64,21 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         
     }
     
+    func calcDistance(lat1: CLLocationDegrees, long1: CLLocationDegrees, lat2: CLLocationDegrees, long2: CLLocationDegrees) -> Double
+    {
+        let R = 6371000.0
+        let r_lat1 = lat1 * M_PI / 180.0
+        let r_lat2 = lat2 * M_PI / 180.0
+        let delta_lat = (lat2 - lat1) * M_PI / 180.0
+        let delta_long = (long2 - long1) * M_PI / 180.0
+        
+        let A = sin(delta_lat / 2) * sin(delta_lat / 2) + cos(r_lat1) * cos(r_lat2) * sin(delta_long / 2) * sin(delta_long / 2)
+        let C = 2 * atan2(sqrt(A), sqrt(1 - A))
+        let D = R * C
+        
+        return D
+    }
+    
     func insertNewUser(){
         if(initialPair)
         {
@@ -131,7 +146,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                         let a = rest.value["latitude"] as? Double
                         let b = rest.value["longitude"] as? Double
                         let c = rest.value["codename"] as? String
-                        let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
+                        //let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude - b!), 2))
+                        let d = self.calcDistance(self.latitude, long1: self.longitude, lat2: a!, long2: b!)
                         if((pair == 0) && (d <= Double(self.range)) && (rest.key != self.userID) && (self.buddyID == ""))
                         {
                             self.buddyID = rest.key
@@ -186,7 +202,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                             let b1 = rest.value["interest1"] as? String
                             let b2 = rest.value["interest2"] as? String
                             let b3 = rest.value["interest3"] as? String
-                            let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude -   b!), 2))
+                           // let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude -   b!), 2))
+                            let d = self.calcDistance(self.latitude, long1: self.longitude, lat2: a!, long2: b!)
                             if((pair == 0) && (d <= Double(self.range)) && (rest.key != self.userID) && (self.buddyID == ""))
                             {
                                 if (self.matchInterest(i1, I2: i2, I3: i3, B1: b1!, B2: b2!,    B3: b3!)==1) {
