@@ -54,24 +54,22 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
             
             let message = Message(text: text, sender: sender, imageUrl: imageUrl)
             
+            //only display messages from your buddy
             if((sender == self.buddyID) || (sender == self.userID))
             {
                  self.messages.append(message)
             }
+            
+            //delete un-needed user information for users who are already paired
             self.userRef.childByAppendingPath(sender).removeValue()
             self.finishReceivingMessage()
         })
-        
-        
-        // dummy data
-        /*let message = Message(text: "test", sender: "test", imageUrl: "")
-        let message2 = Message(text: "cool", sender: "bob", imageUrl: "")
-        self.messages.append(message)
-        self.messages.append(message2)
-        self.finishReceivingMessage()*/
+
     }
     
-    func sendMessage(text: String!, sender: String!) {
+    
+    func sendMessage(text: String!, sender: String!)
+    {
         // ADD A MESSAGE TO FIREBASE
         messagesRef.childByAutoId().setValue([
             "text":text,
@@ -80,12 +78,15 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         ])
     }
     
-    func tempSendMessage(text: String!, sender: String!) {
+    
+    func tempSendMessage(text: String!, sender: String!)
+    {
         let message = Message(text: text, sender: sender, imageUrl: senderImageUrl)
         messages.append(message)
     }
     
-    func setupAvatarImage(name: String, imageUrl: String?, incoming: Bool) {
+    func setupAvatarImage(name: String, imageUrl: String?, incoming: Bool)
+    {
         if let stringUrl = imageUrl {
             if let url = NSURL(string: stringUrl) {
                 if let data = NSData(contentsOfURL: url) {
@@ -102,7 +103,8 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         setupAvatarColor(name, incoming: incoming)
     }
     
-    func setupAvatarColor(name: String, incoming: Bool) {
+    func setupAvatarColor(name: String, incoming: Bool)
+    {
         let diameter = incoming ? UInt(collectionView!.collectionViewLayout.incomingAvatarViewSize.width) : UInt(collectionView!.collectionViewLayout.outgoingAvatarViewSize.width)
         
         let rgbValue = name.hash
@@ -113,6 +115,8 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         
         var nameLength = 0
         var initials : String? = ""
+        
+        //display codeName initials in avatar bubbles
         if(name == userID)
         {
             nameLength = codeName.characters.count
@@ -128,7 +132,8 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         avatars[name] = userImage
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         inputToolbar!.contentView!.leftBarButtonItem = nil
         automaticallyScrollsToMostRecentMessage = true
@@ -148,13 +153,15 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         setupFirebase()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool)
+    {
         super.viewDidAppear(animated)
         collectionView!.collectionViewLayout.springinessEnabled = true
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(animated: Bool)
+    {
         super.viewWillDisappear(animated)
         
         if ref != nil {
@@ -164,13 +171,15 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
     
     // ACTIONS
     
-    func receivedMessagePressed(sender: UIBarButtonItem) {
+    func receivedMessagePressed(sender: UIBarButtonItem)
+    {
         // Simulate reciving message
         showTypingIndicator = !showTypingIndicator
         scrollToBottomAnimated(true)
     }
     
-    override func didPressSendButton(button: UIButton!, withMessageText text: String!, sender: String!, date: NSDate!) {
+    override func didPressSendButton(button: UIButton!, withMessageText text: String!, sender: String!, date: NSDate!)
+    {
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
 
         sendMessage(text, sender: userID)
@@ -178,35 +187,44 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         finishSendingMessage()
     }
     
-    override func didPressAccessoryButton(sender: UIButton!) {
+    override func didPressAccessoryButton(sender: UIButton!)
+    {
         print("Camera pressed!")
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData!
+    {
         return messages[indexPath.item]
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, bubbleImageViewForItemAtIndexPath indexPath: NSIndexPath!) -> UIImageView! {
+    override func collectionView(collectionView: JSQMessagesCollectionView!, bubbleImageViewForItemAtIndexPath indexPath: NSIndexPath!) -> UIImageView!
+    {
         let message = messages[indexPath.item]
         
-        if message.sender() == sender {
+        if message.sender() == sender
+        {
             return UIImageView(image: outgoingBubbleImageView.image, highlightedImage: outgoingBubbleImageView.highlightedImage)
         }
         
         return UIImageView(image: incomingBubbleImageView.image, highlightedImage: incomingBubbleImageView.highlightedImage)
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageViewForItemAtIndexPath indexPath: NSIndexPath!) -> UIImageView! {
+    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageViewForItemAtIndexPath indexPath: NSIndexPath!) -> UIImageView!
+    {
         let message = messages[indexPath.item]
-        if let avatar = avatars[message.sender()] {
+        if let avatar = avatars[message.sender()]
+        {
             return UIImageView(image: avatar)
-        } else {
+        }
+        else
+        {
             setupAvatarImage(message.sender(), imageUrl: message.imageUrl(), incoming: true)
             return UIImageView(image:avatars[message.sender()])
         }
     }
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    {
         return messages.count
     }
     
@@ -214,34 +232,38 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
         
         let message = messages[indexPath.item]
-        if message.sender() == sender {
+        if message.sender() == sender
+        {
             cell.textView!.textColor = UIColor.whiteColor()
-        } else {
+        }
+        else
+        {
             cell.textView!.textColor = UIColor.blackColor()
         }
         
         let attributes : [String:AnyObject] = [NSForegroundColorAttributeName:cell.textView!.textColor!, NSUnderlineStyleAttributeName: 1]
         cell.textView!.linkTextAttributes = attributes
         
-        //        cell.textView.linkTextAttributes = [NSForegroundColorAttributeName: cell.textView.textColor,
-        //            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle]
         return cell
     }
     
     
     // View  usernames above bubbles
-    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString!
+    {
         let message = messages[indexPath.item];
         
         // Sent by me, skip
-        if message.sender() == sender {
+        if message.sender() == sender
+        {
             return nil;
         }
         
         // Same as previous sender, skip
         if indexPath.item > 0 {
             let previousMessage = messages[indexPath.item - 1];
-            if previousMessage.sender() == message.sender() {
+            if previousMessage.sender() == message.sender()
+            {
                 return nil;
             }
         }
@@ -250,16 +272,19 @@ class MessagesViewController: JSQMessagesViewController, CLLocationManagerDelega
         return NSAttributedString(string:buddy)
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat
+    {
         let message = messages[indexPath.item]
         
         // Sent by me, skip
-        if message.sender() == sender {
+        if message.sender() == sender
+        {
             return CGFloat(0.0);
         }
         
         // Same as previous sender, skip
-        if indexPath.item > 0 {
+        if indexPath.item > 0
+        {
             let previousMessage = messages[indexPath.item - 1];
             if previousMessage.sender() == message.sender() {
                 return CGFloat(0.0);

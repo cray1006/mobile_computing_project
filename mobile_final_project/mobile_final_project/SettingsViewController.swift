@@ -28,8 +28,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     var temp_buddy = ""
     var paired = false  //whether or not user is paired
     var initialPair = false //whether or not user has gone through 1 pairing
-    var range = 1000   //
-    var totalanon = 0
+    var range = 1000   //range (radius) in METERS for finding other users in location
+    var totalanon = 0   //determine whether or not user wants to pair with a random person
 
     @IBOutlet weak var toggle1: UISwitch!
     @IBOutlet weak var toggle2: UISwitch!
@@ -42,7 +42,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     @IBOutlet weak var codename: UITextField!
     @IBOutlet weak var staticRangeText: UILabel!
    
-    
+    //function for Pair on Interest toggle switch
     @IBAction func InterestSwitch(sender: AnyObject)
     {
         if self.paironinterest == 1
@@ -55,6 +55,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         }
     }
     
+    //function for Pair on Distance toggle switch
     @IBAction func RangeSwitch(sender: AnyObject)
     {
         if staticRangeText.textColor == UIColor.lightGrayColor()
@@ -72,9 +73,10 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         
     }
     
+    //implementation of haversine formula (calculates distance between 2 coordinates)
     func calcDistance(lat1: CLLocationDegrees, long1: CLLocationDegrees, lat2: CLLocationDegrees, long2: CLLocationDegrees) -> Double
     {
-        let R = 6371000.0
+        let R = 6371000.0   //radius of the Earth
         let r_lat1 = lat1 * M_PI / 180.0
         let r_lat2 = lat2 * M_PI / 180.0
         let delta_lat = (lat2 - lat1) * M_PI / 180.0
@@ -84,16 +86,20 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         let C = 2 * atan2(sqrt(A), sqrt(1 - A))
         let D = R * C
         
-        return D
+        return D    //D is in meters
     }
     
-    func insertNewUser(){
+    //function for inserting new user
+    func insertNewUser()
+    {
+        //block executes for users who have already paired (i.e. are looking for a new pairing)
         if(initialPair)
         {
             let uref = userRef.childByAppendingPath(userID)
             
-            uref.removeValue()
+            uref.removeValue()  //delete old user info
             
+            //reinitialize variables
             paired = false
             buddyID = ""
             temp_buddy = ""
@@ -105,28 +111,34 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         
         print("uid:  " + userID)
         
+        //get interests from text fields
         var i1 = ""
-        if (!interest1.text!.isEmpty){
+        if (!interest1.text!.isEmpty)
+        {
             i1 = interest1.text!.lowercaseString
         }
         
         var i2 = ""
-        if (!interest2.text!.isEmpty){
+        if (!interest2.text!.isEmpty)
+        {
             i2 = interest2.text!.lowercaseString
         }
         
         var i3 = ""
-        if (!interest3.text!.isEmpty){
+        if (!interest3.text!.isEmpty)
+        {
             i3 = interest3.text!.lowercaseString
         }
         
+        //get codename from text field (default is "Anonymous")
         var n = "Anonymous"
-        if (!codename.text!.isEmpty){
+        if (!codename.text!.isEmpty)
+        {
             n = codename.text!
             self.codeName = n
         }
         
-        // Adds new user
+        // Adds new user to database
         userRef.childByAppendingPath(userID).setValue([
             "codename":  n,
             "interest1": i1,
@@ -137,11 +149,13 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
             "latitude": self.latitude,
             "longitude": self.longitude,
             "totalanon": self.totalanon])
-       
+        
+            //this block listens for any changes to user database
             userRef.queryOrderedByKey().observeEventType(.Value, withBlock:
             { snapshot in
                 if(!(snapshot.value is NSNull))
                 {
+                    //iterate through the user database
                     let enumerator = snapshot.children
                     while let rest = enumerator.nextObject() as? FDataSnapshot
                     {
@@ -154,6 +168,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                             let c = rest.value["codename"] as? String
                             let d = self.calcDistance(self.latitude, long1: self.longitude, lat2: a!, long2: b!)
                             print("\(d)")
+                            
+                            //pair user if they are currently not paired and are within range
                             if((pair == 0) && (d <= Double(self.range)) && (rest.key != self.userID) && (self.buddyID == ""))
                             {
                                 self.buddyID = rest.key
@@ -170,6 +186,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                             let b1 = rest.value["interest1"] as? String
                             let b2 = rest.value["interest2"] as? String
                             let b3 = rest.value["interest3"] as? String
+                            
+                            //pair user if ther are currently not paired and have similar interests
                             if((pair == 0) && (rest.key != self.userID) && (self.buddyID == ""))
                             {
                                 if (self.matchInterest(i1, I2: i2, I3: i3, B1: b1!, B2: b2!, B3: b3!)==1) {
@@ -190,7 +208,8 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                             let b1 = rest.value["interest1"] as? String
                             let b2 = rest.value["interest2"] as? String
                             let b3 = rest.value["interest3"] as? String
-                            // let d = sqrt(pow((self.latitude - a!), 2) + pow((self.longitude -   b!), 2))
+                            
+                            //pair is unpaired, in range, and share interests
                             let d = self.calcDistance(self.latitude, long1: self.longitude, lat2: a!, long2: b!)
                             if((pair == 0) && (d <= Double(self.range)) && (rest.key != self.userID) && (self.buddyID == ""))
                             {
@@ -204,6 +223,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
                         }
                         else
                         {
+                            //pair with a random user (other user must also want this)
                             print ("Pair by total anon")
                             let pair = rest.value["paired"] as? Int
                             let c = rest.value["codename"] as? String
@@ -225,16 +245,16 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         {
             print ("No one to pair with currently")
         }
-        else
-        {
-           // self.pairUsers()
-        }
     }
     
-    func matchInterest(I1:String, I2:String, I3:String, B1:String, B2:String, B3:String) -> Int{
+    //function for checking if users share similar interests
+    func matchInterest(I1:String, I2:String, I3:String, B1:String, B2:String, B3:String) -> Int
+    {
         print ("In Match Interest Function")
         
-        if (I1 == "" && I2 == "" && I3 == ""){
+        //assuming user is open to meeting people with random interests
+        if (I1 == "" && I2 == "" && I3 == "")
+        {
             return 1
         }
         
@@ -246,30 +266,38 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         if (I2 == "") { I2 = "null"}
         if (I3 == "") { I3 = "null"}
         
-        if (B1 != ""){
-            if B1 == I1 || B1 == I2 || B1 == I3 {
+        //comparing interests
+        if (B1 != "")
+        {
+            if B1 == I1 || B1 == I2 || B1 == I3
+            {
                 print("match buddy 1")
                 return 1
             }
         }
         
-        if (B2 != ""){
-            if B2 == I1 || B2 == I2 || B2 == I3 {
+        if (B2 != "")
+        {
+            if B2 == I1 || B2 == I2 || B2 == I3
+            {
                 print("match buddy 2")
                 return 1
             }
         }
         
-        if (B3 != ""){
-            if B3 == I1 || B3 == I2 || B3 == I3 {
+        if (B3 != "")
+        {
+            if B3 == I1 || B3 == I2 || B3 == I3
+            {
                 print("match buddy 3")
                 return 1
             }
         }
     
-        return 0
+        return 0 //return 0 if there were no matches
     }
     
+    //function for pairing users
     func pairUsers()
     {
         self.paired = true
@@ -277,6 +305,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         let buddyRef = self.userRef.childByAppendingPath(buddyID)
         let uRef = self.userRef.childByAppendingPath(userID)
         
+        //update user and buddy information in the database
         let pairUpdate = ["paired":  1]
         buddyRef.updateChildValues(pairUpdate)
         uRef.updateChildValues(pairUpdate)
@@ -286,12 +315,13 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         buddyRef.updateChildValues(buddyUpdate)
         uRef.updateChildValues(userUpdate)
         
-        //buddyID = ""
+        //perform seque to MessagesViewController
         performSegueWithIdentifier("toFireChat", sender: self)
     }
     
- 
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    //send information to MessagesViewController
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
+    {
         if (segue.identifier == "toFireChat") {
             let svc = segue!.destinationViewController as! MessagesViewController;
             
@@ -303,9 +333,12 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         }
     }
     
-    @IBAction func ButtonPressed(sender: UIBarButtonItem) {
+    //function executes when confirm button is pressed
+    @IBAction func ButtonPressed(sender: UIBarButtonItem)
+    {
         
-        if paironinterest == 0 && pairondistance == 0 {
+        if paironinterest == 0 && pairondistance == 0
+        {
             totalanon = 1
         }
         
@@ -313,23 +346,24 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         
         insertNewUser()
         
+        //display waiting circle until transition is performed
         let waitingAnimation = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
         waitingAnimation.hidesWhenStopped = true
         waitingAnimation.startAnimating()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: waitingAnimation)
-        
-        
-            
-        //performSegueWithIdentifier("toFireChat", sender: self)
+
     }
 
-    @IBAction func rangevaluechanged(sender: UISlider) {
+    //update range value when slider is used
+    @IBAction func rangevaluechanged(sender: UISlider)
+    {
         let currentvalue = Int(sender.value)
         rangetext.text = String(currentvalue)
         range = currentvalue
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool)
+    {
         self.title = "Settings"
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .Plain, target: self, action: "ButtonPressed:")
@@ -363,6 +397,7 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         }
     }
     
+    //location manager updates latitude and longitude 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         self.latitude = self.locationManager.location!.coordinate.latitude
