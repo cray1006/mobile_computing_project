@@ -248,18 +248,21 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
         
         if (B1 != ""){
             if B1 == I1 || B1 == I2 || B1 == I3 {
+                print("match buddy 1")
                 return 1
             }
         }
         
         if (B2 != ""){
             if B2 == I1 || B2 == I2 || B2 == I3 {
+                print("match buddy 2")
                 return 1
             }
         }
         
         if (B3 != ""){
             if B3 == I1 || B3 == I2 || B3 == I3 {
+                print("match buddy 3")
                 return 1
             }
         }
@@ -291,8 +294,6 @@ class SettingsViewController: UITableViewController, CLLocationManagerDelegate
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         if (segue.identifier == "toFireChat") {
             let svc = segue!.destinationViewController as! MessagesViewController;
-            
-            
             
             // Pass userID and buddyID to next view
             svc.userID = userID
